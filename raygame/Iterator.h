@@ -27,7 +27,7 @@ public:
 
 	//checks for a equal node
 	bool operator==(const Iterator<T>&)const;
-	//checks for a nonequal  node
+	//checks for a unequal  node
 	bool operator!=(const Iterator<T>&)const;
 };
 
