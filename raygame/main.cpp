@@ -20,15 +20,8 @@ int main()
 	int screenHeight = 450;
 
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-
 	
-	SetTargetFPS(60);
-	UnorderedList<int> sort;
-	sort.initializeList();
-
-	sort.insertFirst(12);
-	sort.insertLast(90);
-	sort.clear();
+	SetTargetFPS(60);	
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop

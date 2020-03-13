@@ -1,14 +1,23 @@
 #pragma once
 #include <iostream>
 #include "List.h"
+
 template<typename T>
-class UnorderedList : public List<T> 
-{
+class UnorderedList : public List<T> {
 public:
+	//returns true if node is found
 	bool search(const T&);
+
+	//adds a node to the beginning of the list
 	void insertFirst(const T&);
+
+	//adds a node to the end of the list
 	void insertLast(const T&);
+
+	//deletes a node
 	void deleteNode(const T&);
+
+	//clears everything
 	void clear();
 };
 
@@ -17,6 +26,7 @@ bool UnorderedList<T>::search(const T& infoToSearch)
 {
 	if (this->m_first->info == infoToSearch) return true;
 	if (this->m_last->info == infoToSearch) return true;
+
 	for (auto i = this->begin(); i != this->end(); i++)
 	{
 		if (*i == infoToSearch) return true;
@@ -31,6 +41,14 @@ void UnorderedList<T>::deleteNode(const T& infoToDelete)
 
 	if (this->m_first->info == infoToDelete)
 	{
+		if (this->length() == 1)
+		{
+			this->m_first = nullptr;
+			this->m_last = nullptr;
+			delete iter;
+			this->mCount--;
+			return;
+		}
 		this->m_first = iter->next;
 		delete iter;
 		this->mCount--;
@@ -48,7 +66,7 @@ void UnorderedList<T>::deleteNode(const T& infoToDelete)
 	int spotInList = 1;
 	for (auto i = this->begin(); i != this->end(); i++)
 	{
-		if ((*i) == infoToDelete && spotInList != 0 && spotInList != this->Length())
+		if ((*i) == infoToDelete && spotInList != 0 && spotInList != this->length())
 		{
 			iter->next->previous = iter->previous;
 			iter->previous->next = iter->next;
@@ -67,10 +85,23 @@ void UnorderedList<T>::deleteNode(const T& infoToDelete)
 template<typename T>
 void UnorderedList<T>::clear()
 {
-	for (auto i = this->begin(); i != this->end(); i++)
-	{
-		this->deleteNode(*i);
-	}
+		for (int i = this->mCount; i > 0; i--)
+		{
+			Node<T>* iter = this->m_first;
+			Node<T>* iterNext = nullptr;
+
+			if (iter->next != nullptr)
+			{
+				iterNext = iter->next;
+			}
+
+			this->deleteNode(iter->info);
+
+			if (iterNext != nullptr)
+			{
+				iter = iterNext;
+			}
+		}
 }
 
 template<typename T>
